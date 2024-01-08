@@ -21,7 +21,7 @@
   },
   "license": "UNLICENSED",
   "scripts": {
-    "server-start": "openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096 -pass pass:passphrase && openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -passin pass:passphrase -pubout && symfony server:start --port=8001",
+    "setup-and-start": "openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096 -pass pass:passphrase && openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -passin pass:passphrase -pubout && symfony server:start --port=8001",
     "watch": "encore dev --watch",
     "build": "encore production --progress",
     "dependencies": "composer install && yarn install && yarn build",

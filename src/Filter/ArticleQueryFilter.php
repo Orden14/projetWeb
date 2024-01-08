@@ -4,9 +4,9 @@ namespace App\Filter;
 
 use Doctrine\ORM\QueryBuilder;
 use ApiPlatform\Metadata\Operation;
+use Symfony\Component\PropertyInfo\Type;
 use ApiPlatform\Doctrine\Orm\Filter\AbstractFilter;
 use ApiPlatform\Doctrine\Orm\Util\QueryNameGeneratorInterface;
-use Symfony\Component\PropertyInfo\Type;
 
 class ArticleQueryFilter extends AbstractFilter
 {

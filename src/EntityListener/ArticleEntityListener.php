@@ -5,10 +5,10 @@ namespace App\EntityListener;
 use App\Entity\User;
 use App\Entity\Article;
 use Doctrine\ORM\Events;
-use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
-use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Symfony\Bundle\SecurityBundle\Security;
+use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
 
 #[AsEntityListener(event: Events::prePersist, entity: Article::class)]
 #[AsEntityListener(event: Events::preUpdate, entity: Article::class)]

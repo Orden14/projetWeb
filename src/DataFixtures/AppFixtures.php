@@ -4,10 +4,11 @@ namespace App\DataFixtures;
 
 use App\Entity\Article;
 use App\Entity\User;
-use Doctrine\Bundle\FixturesBundle\Fixture;
+use DateTimeImmutable;
 use Doctrine\Persistence\ObjectManager;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
@@ -22,7 +23,7 @@ class AppFixtures extends Fixture
     {
         $user = new User();
 
-        $hashedPassword = $this->passwordHasher->hashPassword($user, 'password');
+        $hashedPassword = $this->passwordHasher->hashPassword($user, 'admin');
 
         $user->setUsername('admin');
         $user->setPassword($hashedPassword);
@@ -40,8 +41,8 @@ class AppFixtures extends Fixture
             $article->setSlug($slug);
             $article->setDescription("Description $i");
             $article->setUser($user);
-            $article->setCreatedAt(new \DateTimeImmutable());
-            $article->setPublishedAt(new \DateTimeImmutable());
+            $article->setCreatedAt(new DateTimeImmutable());
+            $article->setPublishedAt(new DateTimeImmutable());
 
             $manager->persist($article);
         }

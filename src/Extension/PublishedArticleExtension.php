@@ -2,13 +2,13 @@
 
 namespace App\Extension;
 
-use ApiPlatform\Doctrine\Orm\Extension\QueryCollectionExtensionInterface;
-use ApiPlatform\Doctrine\Orm\Extension\QueryItemExtensionInterface;
-use ApiPlatform\Doctrine\Orm\Util\QueryNameGeneratorInterface;
-use ApiPlatform\Metadata\Operation;
 use App\Entity\Article;
 use Doctrine\ORM\QueryBuilder;
+use ApiPlatform\Metadata\Operation;
 use Symfony\Bundle\SecurityBundle\Security;
+use ApiPlatform\Doctrine\Orm\Util\QueryNameGeneratorInterface;
+use ApiPlatform\Doctrine\Orm\Extension\QueryItemExtensionInterface;
+use ApiPlatform\Doctrine\Orm\Extension\QueryCollectionExtensionInterface;
 
 class PublishedArticleExtension implements QueryCollectionExtensionInterface, QueryItemExtensionInterface
 {
