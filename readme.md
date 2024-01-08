@@ -1,4 +1,4 @@
-# Projet Web type Leboncoin
+# Projet Web pour le cours Challengeweb
 
 ## Auteurs
 Thomas L.  
