@@ -1,0 +1,30 @@
+{
+  "dependencies": {
+    "@babel/core": "^7.23.7",
+    "@babel/preset-env": "^7.23.7",
+    "@hotwired/stimulus": "^3.2.2",
+    "@popperjs/core": "^2.11.8",
+    "@symfony/stimulus-bridge": "^3.2.2",
+    "@symfony/webpack-encore": "^4.5.0",
+    "bootstrap": "^5.3.2",
+    "bootstrap-select": "^1.13.18",
+    "core-js": "^3.35.0",
+    "jquery": "^3.7.1",
+    "jquery-confirm": "^3.3.4",
+    "regenerator-runtime": "^0.14.1",
+    "sass": "^1.69.7",
+    "sass-loader": "^13.3.3",
+    "stimulus": "^3.2.2",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-notifier": "^1.15.0"
+  },
+  "license": "UNLICENSED",
+  "scripts": {
+    "server-start": "openssl genpkey -out config/jwt/private.pem -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096 -pass pass:passphrase && openssl pkey -in config/jwt/private.pem -out config/jwt/public.pem -passin pass:passphrase -pubout && symfony server:start --port=8001",
+    "watch": "encore dev --watch",
+    "build": "encore production --progress",
+    "dependencies": "composer install && yarn install && yarn build",
+    "truncate-database": "symfony console d:d:d --if-exists --force && symfony console d:d:c && symfony console d:s:u --force --complete && symfony console d:f:l -n"
+  }
+}

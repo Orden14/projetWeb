@@ -1,0 +1,33 @@
+version: "3.8"
+services:
+    db:
+        image: yobasystems/alpine-mariadb:10.11.2
+        container_name: db_projetWeb
+        restart: no
+        volumes:
+            - db-data:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: projetWeb
+        ports:
+            - '3306:3306'
+        networks:
+            - dev
+
+    phpmyadmin:
+        image: phpmyadmin
+        container_name: phpmyadmin_projetWeb
+        restart: no
+        depends_on:
+            - db
+        ports:
+            - 8080:80
+        environment:
+            PMA_HOST: db
+        networks:
+            - dev
+
+networks:
+    dev:
+
+volumes:
+    db-data:
