@@ -71,7 +71,7 @@ class Article
     #[Groups(['article:read'])]
     private ?DateTimeImmutable $editedAt = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     #[Groups(['article:read', 'article:write'])]
     private ?DateTimeImmutable $publishedAt = null;
 
