@@ -12,11 +12,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route("/article", name:"article_")]
 class ArticleController extends AbstractController
 {
     
-    #[Route("/article/new", name:"article_new")]
-    
+    #[Route("/new", name:"new")]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $article = new Article();
@@ -24,7 +24,7 @@ class ArticleController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            
+
             dd($form->get('title')->getData());
 
             $entityManager->persist($article);
@@ -34,7 +34,7 @@ class ArticleController extends AbstractController
             return $this->redirectToRoute('app_index');
         }
 
-        return $this->render('create_article/createArticle.html.twig', [
+        return $this->render('article/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }
