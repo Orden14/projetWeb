@@ -13,11 +13,15 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[Route("/article", name:"article_")]
 class ArticleController extends AbstractController
 {
+    #[Route('/', name: 'app_index')]
+    public function index(): Response
+    {
+        return $this->render('article/index.html.twig');
+    }
     
-    #[Route("/new", name:"new")]
+    #[Route("/new", name:"article_new")]
     #[IsGranted("ROLE_USER")]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {

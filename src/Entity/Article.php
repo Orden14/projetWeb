@@ -14,6 +14,7 @@ use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ArticleRepository;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\Delete;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -29,7 +30,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
         new Post(
             normalizationContext: ['groups' => ['article:read']],
             denormalizationContext: ['groups' => ['article:write']]
-        )
+        ),
+        new Delete()
     ]
 )]
 #[ApiFilter(SearchFilter::class, properties: ['title' => 'partial'])]
