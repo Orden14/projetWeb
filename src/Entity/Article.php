@@ -60,7 +60,7 @@ class Article
 
     #[ORM\ManyToOne(inversedBy: 'articles')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['article:read'])]
+    #[Groups(['article:list', 'article:read'])]
     private ?User $user = null;
 
     #[ORM\Column]
