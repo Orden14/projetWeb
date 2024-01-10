@@ -47,6 +47,7 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
             ->setSlug($slug)
             ->setDescription($faker->text())
             ->setUser($author)
+            ->setBody($faker->text(800))
             ->setCreatedAt(new DateTimeImmutable())
             ->setPublishedAt(new DateTimeImmutable())
         ;
