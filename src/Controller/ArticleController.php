@@ -14,9 +14,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ArticleController extends AbstractController
 {
-    /**
-     * @Route("/article/new", name="article_new")
-     */
+    
+    #[Route("/article/new", name:"article_new")]
+    
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $article = new Article();
@@ -28,10 +28,10 @@ class ArticleController extends AbstractController
             $entityManager->flush();
 
             // Redirect after saving the article
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('app_index');
         }
 
-        return $this->render('create_article/index.html.twig', [
+        return $this->render('create_article/createArticle.html.twig', [
             'form' => $form->createView(),
         ]);
     }
