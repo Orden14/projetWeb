@@ -6,26 +6,60 @@
     <div class="container mt-5">
         <h1>Ajouter un article</h1>
 
-        {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+        <form id="article-form" class="needs-validation" novalidate>
             <div class="mb-3">
-                {{ form_label(form.title, 'Title', {'label_attr': {'class': 'form-label'}}) }}
-                {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
-                {{ form_errors(form.title) }}
+                <label for="title" class="form-label">Title</label>
+                <input type="text" id="title" name="title" class="form-control" required>
             </div>
 
             <div class="mb-3">
-                {{ form_label(form.description, 'Description', {'label_attr': {'class': 'form-label'}}) }}
-                {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
-                {{ form_errors(form.description) }}
+                <label for="description" class="form-label">Description</label>
+                <textarea id="description" name="description" class="form-control" required></textarea>
             </div>
 
             <div class="mb-3">
-                {{ form_label(form.body, 'Body', {'label_attr': {'class': 'form-label'}}) }}
-                {{ form_widget(form.body, {'attr': {'class': 'form-control', 'rows': '5'}}) }}
-                {{ form_errors(form.body) }}
+                <label for="body" class="form-label">Body</label>
+                <textarea id="body" name="body" class="form-control" rows="5" required></textarea>
             </div>
 
-            {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
-        {{ form_end(form) }}
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+        </form>
+
+        <div id="form-response" class="mt-3"></div>
     </div>
+
+    <script>
+document.getElementById('article-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    var data = {
+        title: document.getElementById('title').value,
+        description: document.getElementById('description').value,
+        body: document.getElementById('body').value,
+    };
+
+    fetch('http://127.0.0.1:8001/api/articles', { // Your API endpoint
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        window.location.href = '/'; // Replace '/' with the path to your homepage
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('form-response').innerText = 'Erreur lors de la création de l\'article';
+        // Additional error handling
+    });
+});
+
+    </script>
 {% endblock %}
