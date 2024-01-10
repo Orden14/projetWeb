@@ -24,6 +24,9 @@ class ArticleController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            
+            dd($form->get('title')->getData());
+
             $entityManager->persist($article);
             $entityManager->flush();
 
