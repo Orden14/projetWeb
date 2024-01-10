@@ -1,10 +1,11 @@
-{% block title %}Create New Article{% endblock %}
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un article{% endblock %}
 
 {% block body %}
-    <h1>Create a New Article</h1>
+    <h1>Ajouter un article</h1>
 
     {{ form_start(form) }}
         {{ form_widget(form) }}
-        <button type="submit">{{ form.save.vars.label }}</button>
     {{ form_end(form) }}
 {% endblock %}
