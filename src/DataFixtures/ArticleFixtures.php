@@ -2,16 +2,16 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Article;
-use App\Entity\User;
-use App\Repository\UserRepository;
-use DateTimeImmutable;
-use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Faker\Generator;
+use App\Entity\User;
+use DateTimeImmutable;
+use App\Entity\Article;
+use App\Repository\UserRepository;
+use Doctrine\Persistence\ObjectManager;
+use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class ArticleFixtures extends Fixture implements DependentFixtureInterface
 {
