@@ -21,11 +21,14 @@ class ArticleEntityListener
 
     public function prePersist(Article $article, LifecycleEventArgs $event): void
     {
-        /** @var User $currentUser */
-        $currentUser = $this->security->getUser();
+        /** @var ?User $currentUser */
+        $currentUser = $this->security?->getUser();
 
         $article->computeSlug($this->slugger);
-        $article->setUser($currentUser);
+
+        if ($currentUser) {
+            $article->setUser($currentUser);
+        }
     }
 
     public function preUpdate(Article $article, LifecycleEventArgs $event): void
