@@ -1,0 +1,73 @@
+import { Controller } from '@hotwired/stimulus'
+
+export default class extends Controller {
+    static values = { currentUsername: String }
+    
+    connect() {
+        this.loadArticles();
+    }
+
+    loadArticles() {
+        const apiEndpoint = `http://127.0.0.1:8001/api/articles?page=1&user.username=${this.currentUsernameValue}`;
+
+        fetch(apiEndpoint)
+            .then(response => response.json())
+            .then(articles => {
+                const articlesDiv = document.getElementById('articlesContainer');
+                let html = '<div class="row gx-3 gx-lg-3 row-cols-3 row-cols-md-3 row-cols-xl-3 justify-content-center">';
+
+                articles.forEach(article => {
+                    html += this.buildArticleCard(article);
+                });
+
+                html += '</div>';
+                articlesDiv.innerHTML = html;
+            });
+    }
+
+    deleteArticle(event) {
+        const articleId = event.currentTarget.getAttribute('data-article-id');
+        if (confirm('Etes-vous sur de vouloir supprimer votre article ?')) {
+            fetch(`/api/articles/${articleId}`, { method: 'DELETE' })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error deleting article');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    event.currentTarget.closest('.article-container').remove();
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    }
+
+    buildArticleCard(article) {
+        const date = new Date(article.publishedAt);
+        const formattedDate = date.toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' }) + ' à ' + date.toLocaleTimeString('fr-FR');
+        const body = article.body.length > 450 ? article.body.substring(0, 450) + ' ...' : article.body;
+
+        return `
+            <div class="col mb-5">
+                <div class="card h-100">
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <p class="h5 text-justify">${article.title}</p>
+                        </div>
+                        <div><em>
+                            <p>Auteur : ${article.user.username} <br>
+                            ${formattedDate}
+                            <br></em>
+                            <p class="text-justify">${body}</p>
+                        </div>
+                    </div>
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent text-center">
+                        <a class="btn btn-outline-danger mt-auto" href="http://127.0.0.1:8001/myarticle" data-action="click->own-article#deleteArticle" 
+                        data-article-id="${article.id }"> Supprimer </a>
+                        <a class="btn btn-outline-info mt-auto" href="#">Modifier</a>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+}

@@ -30,4 +30,16 @@ class ArticleController extends AbstractController
             'user' => $user,
         ]);
     }
+
+
+    #[Route("/myarticle", name:"app_myarticle")]
+    #[IsGranted("ROLE_USER")]
+    public function own(): Response
+    {
+        $user = $this->getUser();
+        return $this->render('article/own.html.twig', [
+            'user' => $user,
+        ]);
+    }
 }
+
