@@ -16,9 +16,13 @@ export default class extends Controller {
                 const articlesDiv = document.getElementById('articlesContainer');
                 let html = '<div class="row gx-3 gx-lg-3 row-cols-3 row-cols-md-3 row-cols-xl-3 justify-content-center">';
 
-                articles.forEach(article => {
-                    html += this.buildArticleCard(article);
-                });
+                if (articles.length !== 0) {
+                    articles.forEach(article => {
+                        html += this.buildArticleCard(article);
+                    });
+                } else {
+                    html += '<p class="text-center">Aucun article publié pour le moment.</p>';
+                }
 
                 html += '</div>';
                 articlesDiv.innerHTML = html;
@@ -27,19 +31,35 @@ export default class extends Controller {
 
     deleteArticle(event) {
         const articleId = event.currentTarget.getAttribute('data-article-id');
-        if (confirm('Etes-vous sur de vouloir supprimer votre article ?')) {
-            fetch(`/api/articles/${articleId}`, { method: 'DELETE' })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Error deleting article');
+        event.preventDefault()
+        $.confirm({
+            icon: 'bi bi-exclamation-triangle-fill',
+            title: 'Attention !',
+            content: 'Êtes-vous sûr de vouloir procéder à la suppression ?',
+            type: 'red',
+            typeAnimated: true,
+            buttons: {
+                confirm: {
+                    text: 'Confirmer',
+                    action: () => {
+                        fetch(`/api/articles/${articleId}`, { method: 'DELETE' })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Error deleting article');
+                                }
+                                return response.json();
+                            })
+                            .then(data => {
+                                event.currentTarget.closest('.article-container').remove();
+                            })
+                            .catch(error => console.error('Error:', error));
                     }
-                    return response.json();
-                })
-                .then(data => {
-                    event.currentTarget.closest('.article-container').remove();
-                })
-                .catch(error => console.error('Error:', error));
-        }
+                },
+                cancel: {
+                    text: 'Annuler'
+                }
+            }
+        })
     }
 
     buildArticleCard(article) {

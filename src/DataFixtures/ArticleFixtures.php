@@ -2,10 +2,10 @@
 
 namespace App\DataFixtures;
 
+use DateTime;
 use Faker\Factory;
 use Faker\Generator;
 use App\Entity\User;
-use DateTimeImmutable;
 use App\Entity\Article;
 use App\Repository\UserRepository;
 use Doctrine\Persistence\ObjectManager;
@@ -48,8 +48,8 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
             ->setDescription($faker->text())
             ->setUser($author)
             ->setBody($faker->text(800))
-            ->setCreatedAt(new DateTimeImmutable())
-            ->setPublishedAt(new DateTimeImmutable())
+            ->setCreatedAt(new DateTime())
+            ->setPublishedAt(new DateTime())
         ;
 
         return $article;

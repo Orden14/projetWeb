@@ -2,7 +2,7 @@ import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
     initialize () {
-        const apiEndpoint = 'http://127.0.0.1:8001/api/articles?page=1';
+        const apiEndpoint = 'http://127.0.0.1:8001/api/articles?page=1&order%5BcreatedAt%5D=desc';
 
         fetch(apiEndpoint)
             .then(response => {
@@ -53,8 +53,6 @@ export default class extends Controller {
 
                 html += '</div>';
                 articlesDiv.innerHTML = html;
-
             });
-
     }
 }

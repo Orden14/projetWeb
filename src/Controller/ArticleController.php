@@ -8,6 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+#[IsGranted("ROLE_USER")]
 class ArticleController extends AbstractController
 {
     #[Route('/', name: 'app_index')]
@@ -20,7 +21,6 @@ class ArticleController extends AbstractController
     }
     
     #[Route("/new", name:"article_new")]
-    #[IsGranted("ROLE_USER")]
     public function new(): Response
     {
         $user = $this->getUser();
@@ -33,7 +33,6 @@ class ArticleController extends AbstractController
 
 
     #[Route("/myarticle", name:"app_myarticle")]
-    #[IsGranted("ROLE_USER")]
     public function own(): Response
     {
         $user = $this->getUser();

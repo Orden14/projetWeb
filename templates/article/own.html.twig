@@ -1,9 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
-<div id="articlesContainer"
-     data-controller="own-article"
-     data-own-article-current-username-value="{{ app.user.username }}">
+<div class="container cmargintop">
+     <div id="articlesContainer"
+          data-controller="own-article"
+          data-own-article-current-username-value="{{ app.user.username }}">
+     </div>
 </div>
 {% endblock %}

@@ -32,7 +32,6 @@ export default class extends Controller {
         .catch(error => {
             console.error('Error:', error);
             this.responseTarget.innerText = 'Erreur lors de la création de l\'article';
-            // Additional error handling
         });
     }
 }
