@@ -23,9 +23,11 @@ class ArticleController extends AbstractController
     #[IsGranted("ROLE_USER")]
     public function new(): Response
     {
+        $user = $this->getUser();
         $form = $this->createForm(ArticleType::class);
         return $this->render('article/new.html.twig', [
             'form' => $form->createView(),
+            'user' => $user,
         ]);
     }
 }
