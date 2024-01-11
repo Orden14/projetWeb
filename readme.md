@@ -20,4 +20,5 @@ Pour lancer le projet, se placer dans la root directory du projet puis :
 Le projet sera accessible sur http://localhost:8001  
 
 ## Le projet
-Expliquer le projet brievement @TODO
+Le projet consiste à faire une API de gestion d'articles de blog ou de presse avec API Platform.
+Il contient aussi une interface web qui utilise directement l'API

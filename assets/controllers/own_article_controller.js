@@ -53,6 +53,9 @@ export default class extends Controller {
                                 event.currentTarget.closest('.article-container').remove();
                             })
                             .catch(error => console.error('Error:', error));
+                        setTimeout(() => {
+                            window.location.href = '/'; 
+                        }, 1000);
                     }
                 },
                 cancel: {
@@ -82,7 +85,7 @@ export default class extends Controller {
                         </div>
                     </div>
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent text-center">
-                        <a class="btn btn-outline-danger mt-auto" href="http://127.0.0.1:8001/myarticle" data-action="click->own-article#deleteArticle" 
+                        <a class="btn btn-outline-danger mt-auto" href="http://127.0.0.1:8001/show" data-action="click->own-article#deleteArticle" 
                         data-article-id="${article.id }"> Supprimer </a>
                         <a class="btn btn-outline-info mt-auto" href="#">Modifier</a>
                     </div>
