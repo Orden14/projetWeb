@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Article;
+use Doctrine\ORM\EntityManagerInterface;
 
 class ArticleController extends AbstractController
 {
@@ -38,6 +40,16 @@ class ArticleController extends AbstractController
     {
         $user = $this->getUser();
         return $this->render('article/own.html.twig', [
+            'user' => $user,
+        ]);
+    }
+
+    #[Route('/myarticle/edit/{id}', name: 'article_edit')]
+    public function edit(Article $article, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+        return $this->render('article/edit.html.twig', [
+            'article' => $article,
             'user' => $user,
         ]);
     }

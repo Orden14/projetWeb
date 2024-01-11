@@ -35,6 +35,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
         new Delete()
     ]
 )]
+#[ApiFilter(SearchFilter::class, properties: ['title' => 'partial'])]
 #[ApiFilter(SearchFilter::class, properties: ['user.username' => 'partial'])]
 #[ApiFilter(OrderFilter::class, properties: ['publishedAt'])]
 #[ApiFilter(ArticleQueryFilter::class)]
