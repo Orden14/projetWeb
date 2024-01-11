@@ -43,7 +43,7 @@ class ArticleController extends AbstractController
         ]);
     }
 
-    #[Route('/myarticle/edit/{id}', name: 'article_edit')]
+    #[Route('/edit/{id}', name: 'article_edit')]
     public function edit(Article $article, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
