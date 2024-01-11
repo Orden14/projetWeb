@@ -2,20 +2,20 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
-use DateTimeImmutable;
+use DateTime;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
 use Doctrine\DBAL\Types\Types;
 use ApiPlatform\Metadata\Patch;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\Delete;
 use App\Filter\ArticleQueryFilter;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ArticleRepository;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
-use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -26,18 +26,18 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 #[ApiResource(
     operations: [
         new Get(normalizationContext: ['groups' => ['article:read']]),
-        new GetCollection(normalizationContext: ['groups' => ['article:read']]),
+        new GetCollection(normalizationContext: ['groups' => ['article:read']], paginationEnabled: false),
         new Patch(security: 'object.getUser() == user'),
         new Post(
             normalizationContext: ['groups' => ['article:read']],
             denormalizationContext: ['groups' => ['article:write']]
         ),
-        new Delete()
+        new Delete(security: 'object.getUser() == user')
     ]
 )]
 #[ApiFilter(SearchFilter::class, properties: ['title' => 'partial'])]
 #[ApiFilter(SearchFilter::class, properties: ['user.username' => 'partial'])]
-#[ApiFilter(OrderFilter::class, properties: ['publishedAt'])]
+#[ApiFilter(OrderFilter::class, properties: ['createdAt'])]
 #[ApiFilter(ArticleQueryFilter::class)]
 class Article
 {
@@ -68,17 +68,17 @@ class Article
     #[Groups(['article:list', 'article:read'])]
     private ?User $user = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'datetime')]
     #[Groups(['article:read'])]
-    private ?DateTimeImmutable $createdAt = null;
+    private ?DateTime $createdAt = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column(type: 'datetime', nullable: true)]
     #[Groups(['article:read'])]
-    private ?DateTimeImmutable $editedAt = null;
+    private ?DateTime $editedAt = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column(type: 'datetime', nullable: true)]
     #[Groups(['article:read', 'article:write'])]
-    private ?DateTimeImmutable $publishedAt = null;
+    private ?DateTime $publishedAt = null;
 
     public function computeSlug(SluggerInterface $slugger): void
     {
@@ -88,7 +88,10 @@ class Article
     #[ORM\PrePersist]
     public function setCreatedValue(): void
     {
-        $this->createdAt = new DateTimeImmutable();
+        $this->createdAt = new DateTime();
+
+        // @TODO ligne de dessous à enlever une fois la gestion des dates de publication effectuée
+        $this->publishedAt = new DateTime();
     }
 
     public function getId(): ?int
@@ -157,36 +160,36 @@ class Article
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    public function setCreatedAt(DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getEditedAt(): ?\DateTimeImmutable
+    public function getEditedAt(): ?DateTime
     {
         return $this->editedAt;
     }
 
-    public function setEditedAt(?\DateTimeImmutable $editedAt): self
+    public function setEditedAt(?DateTime $editedAt): self
     {
         $this->editedAt = $editedAt;
 
         return $this;
     }
 
-    public function getPublishedAt(): ?\DateTimeImmutable
+    public function getPublishedAt(): ?DateTime
     {
         return $this->publishedAt;
     }
 
-    public function setPublishedAt(\DateTimeImmutable $publishedAt): self
+    public function setPublishedAt(DateTime $publishedAt): self
     {
         $this->publishedAt = $publishedAt;
 
