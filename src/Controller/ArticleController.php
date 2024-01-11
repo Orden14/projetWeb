@@ -13,7 +13,10 @@ class ArticleController extends AbstractController
     #[Route('/', name: 'app_index')]
     public function index(): Response
     {
-        return $this->render('article/index.html.twig');
+        $user = $this->getUser();
+        return $this->render('article/index.html.twig', [
+            'user' => $user,
+        ]);
     }
     
     #[Route("/new", name:"article_new")]
