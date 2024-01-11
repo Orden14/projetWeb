@@ -34,7 +34,7 @@ class ArticleController extends AbstractController
     }
 
 
-    #[Route("/myarticle", name:"app_myarticle")]
+    #[Route("/show", name:"app_show")]
     public function own(): Response
     {
         $user = $this->getUser();
