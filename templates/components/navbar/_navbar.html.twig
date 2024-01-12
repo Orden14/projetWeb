@@ -7,11 +7,12 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                {% include 'components/navbar/links/_articles.html.twig' %}
                 {% if app.user %}
+                    {% include 'components/navbar/links/_articles.html.twig' %}
                     {% include 'components/navbar/links/_new.html.twig' %}
                     {% include 'components/navbar/links/_owned.html.twig' %}
                 {% endif %}
+                {% include 'components/navbar/links/_api.html.twig' %}
             </ul>
         </div>
         {% if app.user %}

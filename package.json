@@ -26,6 +26,7 @@
     "watch": "encore dev --watch",
     "build": "encore production --progress",
     "dependencies": "composer install && yarn install && yarn build",
-    "truncate-database": "symfony console d:d:d --if-exists --force && symfony console d:d:c && symfony console d:s:u --force --complete && symfony console d:f:l -n"
+    "truncate-database": "symfony console d:d:d --if-exists --force && symfony console d:d:c && symfony console d:s:u --force --complete && symfony console d:f:l -n",
+    "fullsetup": "yarn dependencies && yarn truncate-database && yarn setup-and-start"
   }
 }
