@@ -2,8 +2,8 @@
 
 ## Auteurs
 Thomas L.  
-Ludovic M.
-David W.
+Ludovic M.  
+David W.  
 
 EFREI  
 B3 développement web & applications
