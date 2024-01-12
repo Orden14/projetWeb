@@ -3,9 +3,14 @@ import { formatDate } from '../utils/dateFormatterUtil';
 
 export default class extends Controller {
     initialize () {
+        const token = localStorage.getItem('jwtToken');
         const apiEndpoint = 'http://127.0.0.1:8001/api/articles?page=1&order%5BcreatedAt%5D=desc';
 
-        fetch(apiEndpoint)
+        fetch(apiEndpoint, {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+        })
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);

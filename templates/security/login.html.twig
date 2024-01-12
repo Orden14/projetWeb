@@ -3,8 +3,8 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-    <div class="container mt-5">
-        <form method="post">
+    <div class="container mt-5" data-controller="login-token">
+        <form method="post" data-action="submit->login-token#submit">
             {% if error %}
                 <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
             {% endif %}
@@ -17,15 +17,15 @@
 
             <h1 class="h3 mb-3 font-weight-normal">Se connecter</h1>
             <label for="inputUsername">Nom de compte</label>
-            <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" autocomplete="username" required autofocus>
+            <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" autocomplete="username" data-login-token-target="username" required autofocus>
             <label for="inputPassword">Mot de passe</label>
-            <input type="password" name="password" id="inputPassword" class="form-control cmarginbottom" autocomplete="current-password" required>
+            <input type="password" name="password" id="inputPassword" class="form-control cmarginbottom" autocomplete="current-password" data-login-token-target="password" required>
 
             <input type="hidden" name="_csrf_token"
                 value="{{ csrf_token('authenticate') }}"
             >
 
-            <button class="btn btn-lg btn-primary cmargintop" type="submit">
+            <button class="btn btn-lg btn-primary cmargintop" type="submit" data-login-token-target="response">
                 Connexion
             </button>
         </form>

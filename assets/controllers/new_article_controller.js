@@ -6,6 +6,8 @@ export default class extends Controller {
     submit(event) {
         event.preventDefault();
 
+        const token = localStorage.getItem('jwtToken');
+
         const data = {
             title: this.titleTarget.value,
             description: this.descriptionTarget.value,
@@ -14,8 +16,11 @@ export default class extends Controller {
 
         fetch('http://127.0.0.1:8001/api/articles', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(data),
         })
         .then(response => {
             if (!response.ok) {

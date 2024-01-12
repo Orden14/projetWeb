@@ -6,15 +6,20 @@ export default class extends Controller {
     submit(event) {
         event.preventDefault();
 
+        const token = localStorage.getItem('jwtToken');
+
         const data = {
             title: this.titleTarget.value,
             description: this.descriptionTarget.value,
-            body: this.bodyTarget.value
+            body: this.bodyTarget.value,
         };
 
         fetch(`http://127.0.0.1:8001/api/articles/${this.idTarget.value}`, {
             method: 'PATCH',
-            headers: { 'Content-Type': 'application/merge-patch+json' },
+            headers: {
+                'Content-Type': 'application/merge-patch+json',
+                'Authorization': `Bearer ${token}`
+            },
             body: JSON.stringify(data)
         })
         .then(response => {

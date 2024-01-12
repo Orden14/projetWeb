@@ -13,7 +13,12 @@ export default class extends Controller {
     loadArticles() {
         const apiEndpoint = `http://127.0.0.1:8001/api/articles?page=1&user.username=${this.currentUsernameValue}`;
 
-        fetch(apiEndpoint)
+
+        fetch(apiEndpoint, {
+            headers: {
+              'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`
+            }
+        })
             .then(response => response.json())
             .then(articles => {
                 const articlesDiv = document.getElementById('articlesContainer');
@@ -75,7 +80,12 @@ export default class extends Controller {
                 confirm: {
                     text: 'Confirmer',
                     action: () => {
-                        fetch(`/api/articles/${articleId}`, { method: 'DELETE' })
+                        fetch(`/api/articles/${articleId}`, {
+                            method: 'DELETE',
+                            headers: {
+                                'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`
+                            }
+                        })
                             .then(response => {
                                 if (!response.ok) {
                                     throw new Error('Error deleting article');
